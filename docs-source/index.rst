@@ -14,7 +14,7 @@ PyAlexaLambda
 A zero-dependency Python module that makes it easy to write AWS Lambda-based
 Alexa apps.
 
-Copy and paste ```alexa.py`` into your Python 3.6 Lambda and add an ``app.py``
+Copy and paste ``alexa.py`` into your Python 3.6 Lambda and add an ``app.py``
 as so:
 
 .. code-block:: python
