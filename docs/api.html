@@ -1,0 +1,246 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API &#8212; PyAlexaLambda 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="PyAlexaLambda" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">alexa</span> <span class="k">import</span> <span class="n">Alexa</span><span class="p">,</span> <span class="n">statement</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Alexa</span><span class="p">(</span><span class="s1">&#39;My App Name&#39;</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">intent</span><span class="p">(</span><span class="s1">&#39;SayJoke&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">say_joke</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">statement</span><span class="p">(</span><span class="s1">&#39;Sorry, I am not feeling funny today.&#39;</span><span class="p">)</span>
+
+<span class="n">handle_lambda_event</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_lambda_event</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-application-global">
+<h2>The Application Global<a class="headerlink" href="#the-application-global" title="Permalink to this headline">¶</a></h2>
+<p>If you’re coming from Flask, you’ll be familiar with an application global
+<code class="docutils literal"><span class="pre">g</span></code>, which you can use to assign application-level variables like a database
+connection to. PyAlexaLambda has the same idea:</p>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">alexa</span> <span class="k">import</span> <span class="n">Alexa</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">g</span>
+
+<span class="k">def</span> <span class="nf">on_launch</span><span class="p">():</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">connect_to_database</span><span class="p">()</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Alexa</span><span class="p">(</span><span class="s1">&#39;My App Name&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">on_launch</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">intent</span><span class="p">(</span><span class="s1">&#39;Stuff&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">stuff</span><span class="p">():</span>
+    <span class="c1"># do something with g.database</span>
+<span class="n">handle_lambda_event</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_lambda_event</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-alexa">
+<span id="module-documentation"></span><h2>Module Documentation<a class="headerlink" href="#module-alexa" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="alexa.Alexa">
+<em class="property">class </em><code class="descclassname">alexa.</code><code class="descname">Alexa</code><span class="sig-paren">(</span><em>name: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#Alexa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.Alexa" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main application interface.</p>
+<dl class="method">
+<dt id="alexa.Alexa.handle_lambda_event">
+<code class="descname">handle_lambda_event</code><span class="sig-paren">(</span><em>event</em>, <em>ctx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#Alexa.handle_lambda_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.Alexa.handle_lambda_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry point / handler for an AWS Lambda.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) – the event payload</li>
+<li><strong>ctx</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a>) – the Lambda context</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alexa.Alexa.intent">
+<code class="descname">intent</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#Alexa.intent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.Alexa.intent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator used to register the response to an intent.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) – the name of the intent (should match what is in the alexa
+console).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alexa.Alexa.launch">
+<code class="descname">launch</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#Alexa.launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.Alexa.launch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register (or overwrite) a function to be called when the Lambda
+is launched.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<code class="xref py py-data docutils literal"><span class="pre">Callable</span></code>[[], <code class="docutils literal"><span class="pre">None</span></code>]) – the function to call when a LaunchRequest event is
+received.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="alexa.Alexa.session_ended">
+<code class="descname">session_ended</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#Alexa.session_ended"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.Alexa.session_ended" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register (or overwrite) a function to be called when the session
+is ended.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> (<code class="xref py py-data docutils literal"><span class="pre">Callable</span></code>[[], <code class="docutils literal"><span class="pre">None</span></code>]) – the function to call when a SessionEndedRequest event is
+received.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="alexa.question">
+<code class="descclassname">alexa.</code><code class="descname">question</code><span class="sig-paren">(</span><em>q</em>, <em>reprompt=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#question"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.question" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a plain-text question.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>q</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) – the question</li>
+<li><strong>reprompt</strong> (<code class="xref py py-data docutils literal"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>]) – the plain-text for Alexa to issue if response was not
+understood</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="alexa.statement">
+<code class="descclassname">alexa.</code><code class="descname">statement</code><span class="sig-paren">(</span><em>s</em>, <em>reprompt=None</em>, <em>card_title=None</em>, <em>should_end_session=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/alexa.html#statement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#alexa.statement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a plain-text statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>) – the statement itself</li>
+<li><strong>reprompt</strong> (<code class="xref py py-data docutils literal"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>]) – text for Alexa to issue if response was not understood</li>
+<li><strong>card_title</strong> (<code class="xref py py-data docutils literal"><span class="pre">Optional</span></code>[<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a>]) – card title for Echo devices with screens</li>
+<li><strong>should_end_session</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a>) – whether to end the current session or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">dict</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">PyAlexaLambda</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Mike Sukmanowsky.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
